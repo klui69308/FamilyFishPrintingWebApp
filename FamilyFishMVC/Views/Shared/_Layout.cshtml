@@ -1,0 +1,66 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Family Fish Printing</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <nav class="left">
+            <a href="#menu"><span>Menu</span></a>
+        </nav>
+        <div class="logo">@Html.ActionLink("Family Fish Printing, Inc.", "Index", "Home", new { style = "text-decoration:none;"})</div>
+        <nav class="right">
+            @Html.Partial("_LoginPartial")
+            <div class="button alt">
+                Cart
+            </div>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Ready To Buy", "ReadyToBuy", "Home")</li>
+            <li>@Html.ActionLink("Ready To Print", "ReadyToPrint", "Home")</li>
+            <li>@Html.ActionLink("Bring Your Own", "BringYourOwn", "Home")</li>
+            <li>Cart</li>
+        </ul>
+    </nav>
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <h2>Get In Touch</h2>
+            <ul class="actions">
+                <li><span class="icon fa-phone"></span> <a href="#">(314) 320-6064</a></li>
+                <li><span class="icon fa-envelope"></span> <a href="#">klui69308@gmail.com</a></li>
+                <li><span class="icon fa-map-marker"></span> St Louis, MO 63130</li>
+                <li><span class="icon fa-envelope"></span> Github: https://github.com/klui69308/</li>
+                <li><span class="icon fa-envelope"></span>Linkedin: https://www.linkedin.com/in/kayu-lui</li>
+            </ul>
+        </div>
+        <div class="copyright">
+            &copy; Kayu Lui. <br /> I can make your vision come alive into a well-crafted computer application in the digital space.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.scrolly.min.js"></script>
+    <script src="~/Scripts/skel.min.js"></script>
+    <script src="~/Scripts/util.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
