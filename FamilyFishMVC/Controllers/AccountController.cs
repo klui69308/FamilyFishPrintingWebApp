@@ -423,6 +423,7 @@ namespace FamilyFishMVC.Controllers
             base.Dispose(disposing);
         }
 
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -481,5 +482,7 @@ namespace FamilyFishMVC.Controllers
             }
         }
         #endregion
+
     }
+
 }

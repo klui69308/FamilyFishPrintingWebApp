@@ -12,13 +12,11 @@
     <header id="header">
         <nav class="left">
             <a href="#menu"><span>Menu</span></a>
+            <div class="logo">@Html.ActionLink(" ~ Family Fish Printing, Inc. ~", "Index", "Home", new { style = "text-decoration:none;" })</div>
         </nav>
-        <div class="logo">@Html.ActionLink("Family Fish Printing, Inc.", "Index", "Home", new { style = "text-decoration:none;"})</div>
+        
         <nav class="right">
             @Html.Partial("_LoginPartial")
-            <div class="button alt">
-                Cart
-            </div>
         </nav>
     </header>
 
@@ -29,8 +27,9 @@
             <li>@Html.ActionLink("Ready To Buy", "ReadyToBuy", "Home")</li>
             <li>@Html.ActionLink("Ready To Print", "ReadyToPrint", "Home")</li>
             <li>@Html.ActionLink("Bring Your Own", "BringYourOwn", "Home")</li>
-            <li>Cart</li>
+            <li>@Html.ActionLink("Cart", "Index", "Orders")</li>
         </ul>
+        @Html.Partial("_AdminControl")
     </nav>
 
     @RenderBody()

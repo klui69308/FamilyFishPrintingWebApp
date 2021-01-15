@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNet.Identity
+@if (User.IsInRole( "Admin"))
+{
+    <ul class="links">
+        <li><b>Admin Fuctions</b></li>
+        <li><br /></li>
+        <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+        <li>@Html.ActionLink("Products", "Index", "Products")</li>
+        <li>@Html.ActionLink("Category", "index", "Categories")</li>
+    </ul>
+}
+
