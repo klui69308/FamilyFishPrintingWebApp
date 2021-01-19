@@ -2,57 +2,20 @@
 
 @{
     ViewBag.Title = "Details";
+    string imagePath = "~/ProductImages/" + "stockPhoto" + Model.Id + ".png";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Detail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Detail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InventoryCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InventoryCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReservedCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReservedCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-    </dl>
+<div class="inner">
+    <div class="center-block" align ="center">
+        <img src="@Url.Content(imagePath)" alt="" height='270' />
+        <h3>@Html.DisplayFor(model => model.Name)</h3>
+        <h3>$ @Html.DisplayFor(model => model.Price)</h3>
+        <h4 style="color: #25a2c3">
+        <a href="#" onclick="$('#purchase').submit()">Buy |</a>
+        @*@Html.ActionLink("Buy", "AddToCart", "Orders", new { id = Model.Id }, null) |*@
+        @Html.ActionLink("Back to Products", "Index")
+        </h4>
+    </div>
+    
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<form id="purchase" style="display: none" action="@Url.Action("AddToCart", "Orders", new { id = Model.Id })" method="post"></form>
+

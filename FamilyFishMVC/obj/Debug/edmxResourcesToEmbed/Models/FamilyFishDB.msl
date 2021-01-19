@@ -72,25 +72,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="FamilyFishDBModel.Order">
-        <MappingFragment StoreEntitySet="Order">
-          <ScalarProperty Name="Cid" ColumnName="Cid" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OrderLineItems">
-      <EntityTypeMapping TypeName="FamilyFishDBModel.OrderLineItem">
-        <MappingFragment StoreEntitySet="OrderLineItem">
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Pid" ColumnName="Pid" />
-          <ScalarProperty Name="Oid" ColumnName="Oid" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="AspNetUserRoles" TypeName="FamilyFishDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="UserId" />
@@ -119,5 +100,25 @@
         <ScalarProperty Name="Id" ColumnName="Cid" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="OrderLineItems">
+      <EntityTypeMapping TypeName="FamilyFishDBModel.OrderLineItem">
+        <MappingFragment StoreEntitySet="OrderLineItem">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Pid" ColumnName="Pid" />
+          <ScalarProperty Name="Oid" ColumnName="Oid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="FamilyFishDBModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
+          <ScalarProperty Name="Cid" ColumnName="Cid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

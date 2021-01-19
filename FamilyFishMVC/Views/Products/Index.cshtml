@@ -1,5 +1,5 @@
-﻿@*@model IEnumerable<FamilyFishMVC.Models.Product>*@
-@model List<FamilyFishMVC.Models.ProductImages>
+﻿@*@model List<FamilyFishMVC.Models.ProductImages>*@
+@model List<FamilyFishMVC.Models.Product>
 @{
     ViewBag.Title = "Index";
 }
@@ -10,12 +10,16 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-4">
-                    <div>
-                        <img src="@Url.Content(item.Image)" alt="" height='270' />
-                    </div>
-                    <div class="content">
-                        <h3>@item.Name</h3>
-                    </div>
+                    <a href="@Url.Action("Details", new { id = item.Id })">
+                        <div>
+                            <img src="@Url.Content(item.GetImagePath())" alt="" height='270' />
+                        </div>
+                        <div class="content">
+                            <h3>
+                                @item.Name | Detail
+                            </h3>
+                        </div>
+                    </a>
                 </div>
 
             }

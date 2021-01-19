@@ -81,16 +81,17 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Cid" Type="nvarchar" MaxLength="128" />
+    <Property Name="SubmittedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="OrderLineItem">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Oid" Type="int" />
-    <Property Name="Pid" Type="int" />
+    <Property Name="Oid" Type="int" Nullable="false" />
+    <Property Name="Pid" Type="int" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="Price" Type="decimal" Precision="12" Scale="2" />
+    <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -135,8 +136,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderLineIt__Oid__440B1D61">
-    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+  <Association Name="FK__OrderLineIt__Oid__47DBAE45">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
     <End Role="OrderLineItem" Type="Self.OrderLineItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Order">
@@ -147,8 +148,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderLineIt__Pid__44FF419A">
-    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+  <Association Name="FK__OrderLineIt__Pid__48CFD27E">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
     <End Role="OrderLineItem" Type="Self.OrderLineItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
@@ -259,11 +260,11 @@
       <End Role="Customer" EntitySet="Customer" />
       <End Role="Order" EntitySet="Order" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderLineIt__Oid__440B1D61" Association="Self.FK__OrderLineIt__Oid__440B1D61">
+    <AssociationSet Name="FK__OrderLineIt__Oid__47DBAE45" Association="Self.FK__OrderLineIt__Oid__47DBAE45">
       <End Role="Order" EntitySet="Order" />
       <End Role="OrderLineItem" EntitySet="OrderLineItem" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderLineIt__Pid__44FF419A" Association="Self.FK__OrderLineIt__Pid__44FF419A">
+    <AssociationSet Name="FK__OrderLineIt__Pid__48CFD27E" Association="Self.FK__OrderLineIt__Pid__48CFD27E">
       <End Role="Product" EntitySet="Product" />
       <End Role="OrderLineItem" EntitySet="OrderLineItem" />
     </AssociationSet>

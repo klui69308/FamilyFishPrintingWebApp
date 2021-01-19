@@ -17,8 +17,8 @@ namespace FamilyFishMVC.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.OrderLineItems = new HashSet<OrderLineItem>();
             this.Categories = new HashSet<Category>();
+            this.OrderLineItems = new HashSet<OrderLineItem>();
         }
     
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace FamilyFishMVC.Models
         public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderLineItem> OrderLineItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderLineItem> OrderLineItems { get; set; }
     }
 }

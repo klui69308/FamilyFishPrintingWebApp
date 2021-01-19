@@ -15,12 +15,12 @@ namespace FamilyFishMVC.Models
     public partial class OrderLineItem
     {
         public int Id { get; set; }
-        public Nullable<int> Oid { get; set; }
-        public Nullable<int> Pid { get; set; }
+        public int Oid { get; set; }
+        public int Pid { get; set; }
         public int Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
     
-        public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

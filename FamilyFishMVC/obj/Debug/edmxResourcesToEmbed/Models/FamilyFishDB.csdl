@@ -7,8 +7,6 @@
     <EntitySet Name="AspNetUsers" EntityType="FamilyFishDBModel.AspNetUser" />
     <EntitySet Name="Categories" EntityType="FamilyFishDBModel.Category" />
     <EntitySet Name="Customers" EntityType="FamilyFishDBModel.Customer" />
-    <EntitySet Name="Orders" EntityType="FamilyFishDBModel.Order" />
-    <EntitySet Name="OrderLineItems" EntityType="FamilyFishDBModel.OrderLineItem" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="FamilyFishDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -21,26 +19,28 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="Customer" EntitySet="Customers" />
     </AssociationSet>
-    <AssociationSet Name="FK__Order__Cid__398D8EEE" Association="FamilyFishDBModel.FK__Order__Cid__398D8EEE">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK__OrderLineIt__Oid__440B1D61" Association="FamilyFishDBModel.FK__OrderLineIt__Oid__440B1D61">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="OrderLineItem" EntitySet="OrderLineItems" />
-    </AssociationSet>
     <AssociationSet Name="AspNetUserRoles" Association="FamilyFishDBModel.AspNetUserRoles">
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
     <EntitySet Name="Products" EntityType="FamilyFishDBModel.Product" />
-    <AssociationSet Name="FK__OrderLineIt__Pid__44FF419A" Association="FamilyFishDBModel.FK__OrderLineIt__Pid__44FF419A">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="OrderLineItem" EntitySet="OrderLineItems" />
-    </AssociationSet>
     <AssociationSet Name="ProductCategory" Association="FamilyFishDBModel.ProductCategory">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <EntitySet Name="OrderLineItems" EntityType="FamilyFishDBModel.OrderLineItem" />
+    <AssociationSet Name="FK__OrderLineIt__Pid__48CFD27E" Association="FamilyFishDBModel.FK__OrderLineIt__Pid__48CFD27E">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderLineItem" EntitySet="OrderLineItems" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="FamilyFishDBModel.Order" />
+    <AssociationSet Name="FK__Order__Cid__398D8EEE" Association="FamilyFishDBModel.FK__Order__Cid__398D8EEE">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderLineIt__Oid__47DBAE45" Association="FamilyFishDBModel.FK__OrderLineIt__Oid__47DBAE45">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderLineItem" EntitySet="OrderLineItems" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRole">
@@ -120,27 +120,6 @@
     <NavigationProperty Name="AspNetUser" Relationship="FamilyFishDBModel.FK__Customer__Id__36B12243" FromRole="Customer" ToRole="AspNetUser" />
     <NavigationProperty Name="Orders" Relationship="FamilyFishDBModel.FK__Order__Cid__398D8EEE" FromRole="Customer" ToRole="Order" />
   </EntityType>
-  <EntityType Name="Order">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Cid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Customer" Relationship="FamilyFishDBModel.FK__Order__Cid__398D8EEE" FromRole="Order" ToRole="Customer" />
-    <NavigationProperty Name="OrderLineItems" Relationship="FamilyFishDBModel.FK__OrderLineIt__Oid__440B1D61" FromRole="Order" ToRole="OrderLineItem" />
-  </EntityType>
-  <EntityType Name="OrderLineItem">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Oid" Type="Int32" />
-    <Property Name="Pid" Type="Int32" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
-    <NavigationProperty Name="Order" Relationship="FamilyFishDBModel.FK__OrderLineIt__Oid__440B1D61" FromRole="OrderLineItem" ToRole="Order" />
-    <NavigationProperty Name="Product" Relationship="FamilyFishDBModel.FK__OrderLineIt__Pid__44FF419A" FromRole="OrderLineItem" ToRole="Product" />
-  </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Type="FamilyFishDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -181,30 +160,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Order__Cid__398D8EEE">
-    <End Type="FamilyFishDBModel.Customer" Role="Customer" Multiplicity="0..1" />
-    <End Type="FamilyFishDBModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="Cid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__OrderLineIt__Oid__440B1D61">
-    <End Type="FamilyFishDBModel.Order" Role="Order" Multiplicity="0..1" />
-    <End Type="FamilyFishDBModel.OrderLineItem" Role="OrderLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="OrderLineItem">
-        <PropertyRef Name="Oid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="AspNetUserRoles">
     <End Type="FamilyFishDBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="FamilyFishDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
@@ -219,11 +174,27 @@
     <Property Name="InventoryCount" Type="Int32" Nullable="false" />
     <Property Name="ReservedCount" Type="Int32" Nullable="false" />
     <Property Name="Price" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
-    <NavigationProperty Name="OrderLineItems" Relationship="FamilyFishDBModel.FK__OrderLineIt__Pid__44FF419A" FromRole="Product" ToRole="OrderLineItem" />
     <NavigationProperty Name="Categories" Relationship="FamilyFishDBModel.ProductCategory" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="OrderLineItems" Relationship="FamilyFishDBModel.FK__OrderLineIt__Pid__48CFD27E" FromRole="Product" ToRole="OrderLineItem" />
   </EntityType>
-  <Association Name="FK__OrderLineIt__Pid__44FF419A">
-    <End Type="FamilyFishDBModel.Product" Role="Product" Multiplicity="0..1" />
+  <Association Name="ProductCategory">
+    <End Type="FamilyFishDBModel.Category" Role="Category" Multiplicity="*" />
+    <End Type="FamilyFishDBModel.Product" Role="Product" Multiplicity="*" />
+  </Association>
+  <EntityType Name="OrderLineItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Oid" Type="Int32" Nullable="false" />
+    <Property Name="Pid" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+    <NavigationProperty Name="Product" Relationship="FamilyFishDBModel.FK__OrderLineIt__Pid__48CFD27E" FromRole="OrderLineItem" ToRole="Product" />
+    <NavigationProperty Name="Order" Relationship="FamilyFishDBModel.FK__OrderLineIt__Oid__47DBAE45" FromRole="OrderLineItem" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK__OrderLineIt__Pid__48CFD27E">
+    <End Type="FamilyFishDBModel.Product" Role="Product" Multiplicity="1" />
     <End Type="FamilyFishDBModel.OrderLineItem" Role="OrderLineItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
@@ -234,8 +205,38 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="ProductCategory">
-    <End Type="FamilyFishDBModel.Category" Role="Category" Multiplicity="*" />
-    <End Type="FamilyFishDBModel.Product" Role="Product" Multiplicity="*" />
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="SubmittedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="FamilyFishDBModel.FK__Order__Cid__398D8EEE" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="OrderLineItems" Relationship="FamilyFishDBModel.FK__OrderLineIt__Oid__47DBAE45" FromRole="Order" ToRole="OrderLineItem" />
+  </EntityType>
+  <Association Name="FK__Order__Cid__398D8EEE">
+    <End Type="FamilyFishDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="FamilyFishDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Cid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderLineIt__Oid__47DBAE45">
+    <End Type="FamilyFishDBModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="FamilyFishDBModel.OrderLineItem" Role="OrderLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderLineItem">
+        <PropertyRef Name="Oid" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

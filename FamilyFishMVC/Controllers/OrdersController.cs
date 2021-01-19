@@ -7,18 +7,102 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FamilyFishMVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FamilyFishMVC.Controllers
 {
     public class OrdersController : Controller
     {
         private FamilyFishDBEntities db = new FamilyFishDBEntities();
-
-        // GET: Orders
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult AddToCart(int id)
         {
-            var orders = db.Orders.Include(o => o.Customer);
-            return View(orders.ToList());
+            var customerId = User.Identity.GetUserId();
+            var order = db.Orders.FirstOrDefault(o=>o.Cid == customerId && o.SubmittedDate == null);
+            if (order == null)
+            {
+                order = new Order
+                {
+                    Cid = customerId
+                };
+                db.Orders.Add(order);
+            }
+            var orderLineItem = order.OrderLineItems.FirstOrDefault(item => item.Pid == id);
+            var product = db.Products.Find(id);
+            if (orderLineItem != null)
+            {
+                orderLineItem.Quantity++;
+                db.Entry(orderLineItem).State = EntityState.Modified;
+            }
+            else
+            {
+                orderLineItem = new OrderLineItem
+                {
+                    Pid = id,
+                    Quantity = 1,
+                    Price = product.Price
+                };
+                order.OrderLineItems.Add(orderLineItem);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Submit(int id)
+        {
+            var order = db.Orders.Find(id);
+            order.SubmittedDate = DateTime.Now;
+            foreach(var item in order.OrderLineItems)
+            {
+                item.Product.InventoryCount -= item.Quantity;
+                db.Entry(item.Product).State = EntityState.Modified;
+            }
+            db.Entry(order).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        // GET: Orders
+        public ActionResult Index(int? id)
+        {
+            Order order;
+            if (id is null)
+            {
+                var customerId = User.Identity.GetUserId();
+                order = db.Orders.FirstOrDefault(o => o.Cid == customerId && o.SubmittedDate == null);
+            }
+            else
+            {
+                order = db.Orders.Find(id);
+            }
+            var orderLineItem = order?.OrderLineItems;
+            
+            if(orderLineItem is null)
+            {
+                orderLineItem = new List<OrderLineItem>();
+            }
+            //if(orderLineItem != null)
+            //{
+            //    foreach (var item in orderLineItem)
+            //    {
+            //        CartItems cartItem = new CartItems();
+            //        cartItem.OrderID = item.Oid;
+            //        string imagePath = "~/ProductImages/" + "stockPhoto" + item.Id + ".png";
+            //        try
+            //        {
+            //            cartItem.ProductImage = imagePath;
+            //        }
+            //        catch
+            //        {
+            //            cartItem.ProductImage = "~/ProductImages/yourPhotoHere.jpg";
+            //        }
+            //        cartItem.Price = item.Price;
+            //        cartItem.Quantity = item.Quantity;
+            //        cart.Add(cartItem);
+            //    };
+            //}
+           
+            //return View(orders.ToList());
+            return View(orderLineItem.ToList());
         }
 
         // GET: Orders/Details/5

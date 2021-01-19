@@ -11,17 +11,17 @@
         <EntityTypeShape EntityType="FamilyFishDBModel.AspNetUser" Width="1.5" PointX="3" PointY="3.75" />
         <EntityTypeShape EntityType="FamilyFishDBModel.Category" Width="1.5" PointX="5.25" PointY="11.875" />
         <EntityTypeShape EntityType="FamilyFishDBModel.Customer" Width="1.5" PointX="5.25" PointY="3.75" />
-        <EntityTypeShape EntityType="FamilyFishDBModel.Order" Width="1.5" PointX="7.5" PointY="4.75" />
-        <EntityTypeShape EntityType="FamilyFishDBModel.OrderLineItem" Width="1.5" PointX="9.75" PointY="4.5" />
         <AssociationConnector Association="FamilyFishDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="FamilyFishDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="FamilyFishDBModel.FK__Customer__Id__36B12243" />
-        <AssociationConnector Association="FamilyFishDBModel.FK__Order__Cid__398D8EEE" />
-        <AssociationConnector Association="FamilyFishDBModel.FK__OrderLineIt__Oid__440B1D61" />
         <AssociationConnector Association="FamilyFishDBModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="FamilyFishDBModel.Product" Width="1.5" PointX="7.5" PointY="11.375" />
-        <AssociationConnector Association="FamilyFishDBModel.FK__OrderLineIt__Pid__44FF419A" />
         <AssociationConnector Association="FamilyFishDBModel.ProductCategory" />
+        <EntityTypeShape EntityType="FamilyFishDBModel.OrderLineItem" Width="1.5" PointX="9.75" PointY="8.125" />
+        <AssociationConnector Association="FamilyFishDBModel.FK__OrderLineIt__Pid__48CFD27E" />
+        <EntityTypeShape EntityType="FamilyFishDBModel.Order" Width="1.5" PointX="7.5" PointY="4.625" />
+        <AssociationConnector Association="FamilyFishDBModel.FK__Order__Cid__398D8EEE" />
+        <AssociationConnector Association="FamilyFishDBModel.FK__OrderLineIt__Oid__47DBAE45" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

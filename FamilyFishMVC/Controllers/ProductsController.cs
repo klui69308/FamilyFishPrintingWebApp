@@ -17,30 +17,29 @@ namespace FamilyFishMVC.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var productImages = new List<ProductImages>();
-            foreach(var product in db.Products)
-            {
-                ProductImages productImage = new ProductImages();
-                productImage.ImageId = product.Id;
-                productImage.Name = product.Name;
-                string imagePath = "~/ProductImages/" + "stockPhoto" + product.Id + ".png";
-                try
-                {
-                    productImage.Image = imagePath;
-                }
-                catch
-                {
-                    productImage.Image = "~/ProductImages/yourPhotoHere.jpg";
-                }
-                productImages.Add(productImage);
-            }
+            //var productImages = new List<ProductImages>();
+            //foreach(var product in db.Products)
+            //{
+            //    ProductImages productImage = new ProductImages();
+            //    productImage.ImageId = product.Id;
+            //    productImage.Name = product.Name;
+            //    string imagePath = "~/ProductImages/" + "stockPhoto" + product.Id + ".png";
+            //    try
+            //    {
+            //        productImage.Image = imagePath;
+            //    }
+            //    catch
+            //    {
+            //        productImage.Image = "~/ProductImages/yourPhotoHere.jpg";
+            //    }
+            //    productImages.Add(productImage);
+            //}
 
-            //return View(db.Products.ToList());
-            return View(productImages);
+            return View(db.Products.ToList());
+            //return View(productImages);
         }
 
         // GET: Products/Details/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,6 +50,23 @@ namespace FamilyFishMVC.Controllers
             if (product == null)
             {
                 return HttpNotFound();
+            }
+
+            ProductImages productImage = new ProductImages
+            {
+                ImageId = product.Id,
+                Name = product.Name
+            };
+            productImage.ImageId = product.Id;
+            productImage.Name = product.Name;
+            string imagePath = "~/ProductImages/" + "stockPhoto" + product.Id + ".png";
+            try
+            {
+                productImage.Image = imagePath;
+            }
+            catch
+            {
+                productImage.Image = "~/ProductImages/yourPhotoHere.jpg";
             }
             return View(product);
         }
@@ -80,6 +96,7 @@ namespace FamilyFishMVC.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -111,6 +128,7 @@ namespace FamilyFishMVC.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

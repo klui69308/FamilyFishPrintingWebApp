@@ -155,6 +155,25 @@ namespace FamilyFishMVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //var profile = new Customer
+                    //{
+                    //    Fname = model.Fname,
+                    //    Mname = model.Mname,
+                    //    Lname = model.Lname,
+                    //    StreetNum = model.StreetNum,
+                    //    StreetName = model.StreetName,
+                    //    State = model.State,
+                    //    Zip = model.Zip,
+                    //    HPhone = model.HPhone,
+                    //    CPhone = model.CPhone
+                    //};
+
+                    //using (var db = new FamilyFishDBEntities())
+                    //{
+                    //    db.Customers.Add(profile);
+                    //    db.SaveChanges();
+                    //}
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -163,7 +182,7 @@ namespace FamilyFishMVC.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Create", "Customers");
                 }
                 AddErrors(result);
             }

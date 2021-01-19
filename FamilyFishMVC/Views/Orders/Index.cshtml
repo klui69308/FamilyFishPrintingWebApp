@@ -1,33 +1,81 @@
-﻿@model IEnumerable<FamilyFishMVC.Models.Order>
+﻿@model IEnumerable<FamilyFishMVC.Models.OrderLineItem>
+@*@model List<FamilyFishMVC.Models.CartItems>*@
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer.Fname)
-        </th>
-        <th></th>
-    </tr>
+</p>*@
+<div class="inner">
+    <table class="table">
+        <tr>
+            <th>
+                Order ID
+            </th>
+            <th>
+                Product Image
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Subtotal Price
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer.Fname)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Oid
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Product.GetImagePath())" alt="" height='50' />
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @(item.Price * item.Quantity)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "OrderLineItems", new { id = item.Id }, null) |
+                    @Html.ActionLink("Delete", "Delete", "OrderLineItems", new { id = item.Id }, null)
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3">Total</td>
+            <td colspan="3">@Model.Sum(sum => sum.Price * sum.Quantity)</td>
+        </tr>
+    </table>
 
-</table>
+    @if (Model.Any())
+    {
+        <div>
+            @using (Html.BeginForm("Submit", "Orders", new { id = Model.First().Oid }, FormMethod.Post, null))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submit" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+    }
+</div>
+

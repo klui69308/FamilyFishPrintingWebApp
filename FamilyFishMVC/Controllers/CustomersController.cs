@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FamilyFishMVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FamilyFishMVC.Controllers
 {
@@ -18,7 +19,8 @@ namespace FamilyFishMVC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.AspNetUser);
+            //var customers = db.Customers.Include(c => c.AspNetUser);
+            var customers = db.Customers;
             return View(customers.ToList());
         }
 
@@ -40,8 +42,12 @@ namespace FamilyFishMVC.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email");
-            return View();
+            Customer customer = new Customer
+            {
+                Id = User.Identity.GetUserId()
+            };
+            //ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email");
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -49,13 +55,22 @@ namespace FamilyFishMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "Id,Fname,Lname,Mname,Email,StreetNum,StreetName,City,State,Zip,HPhone,CPhone")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                if(customer.Id != User.Identity.GetUserId())
+                {
+                    throw new InvalidOperationException("User ID is not loggedin user");
+                }
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var subject = "Welcome to Family Fish Printing";
+                var body = "Empty at this time";
+
+                MessageSender.SendEmail(customer.Email, subject, body);
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", customer.Id);
@@ -63,6 +78,7 @@ namespace FamilyFishMVC.Controllers
         }
 
         // GET: Customers/Edit/5
+        [Authorize(Roles ="Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
