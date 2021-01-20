@@ -9,7 +9,16 @@ namespace FamilyFishMVC.Models
     {
         public string GetImagePath()
         {
-            string imagePath = "~/ProductImages/" + "stockPhoto" + Id + ".png";
+            string imagePath;
+            if (Id <= 6)
+            {
+                imagePath = "~/ProductImages/" + "stockPhoto" + Id + ".png";
+            }
+            else
+            {
+                imagePath = "~/ProductImages/" + "yourPhotoHere.jpg";
+            }
+            
             //To do handle missing file
             //string fileSystemPath = 
 

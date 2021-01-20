@@ -91,11 +91,11 @@ namespace FamilyFishMVC.Controllers
             {
                 db.Entry(orderLineItem).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Orders");
             }
             ViewBag.Oid = new SelectList(db.Orders, "Id", "Cid", orderLineItem.Oid);
             ViewBag.Pid = new SelectList(db.Products, "Id", "Name", orderLineItem.Pid);
-            return View(orderLineItem);
+            return RedirectToAction("Index", "Orders");
         }
 
         // GET: OrderLineItems/Delete/5
@@ -121,7 +121,7 @@ namespace FamilyFishMVC.Controllers
             OrderLineItem orderLineItem = db.OrderLineItems.Find(id);
             db.OrderLineItems.Remove(orderLineItem);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Orders");
         }
 
         protected override void Dispose(bool disposing)

@@ -3,25 +3,23 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
 <section class="wrapper">
     <div class="inner">
         <div class="row">
-            @foreach (var customer in Model)
-            {
-                <table>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Home Phone</th>
-                        <th>Cell Phone</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip</th>
-                    </tr>
+            <table>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Home Phone</th>
+                    <th>Cell Phone</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                </tr>
+                @foreach (var customer in Model)
+                {
                     <tr>
                         <td>@customer.Fname</td>
                         <td>@customer.Lname</td>
@@ -33,8 +31,8 @@
                         <td>@customer.State</td>
                         <td>@customer.Zip</td>
                     </tr>
-                </table>
-            }
+                }
+            </table>
         </div>
     </div>
 </section>

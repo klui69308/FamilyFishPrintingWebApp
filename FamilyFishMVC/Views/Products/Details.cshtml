@@ -2,20 +2,32 @@
 
 @{
     ViewBag.Title = "Details";
-    string imagePath = "~/ProductImages/" + "stockPhoto" + Model.Id + ".png";
 }
-<div class="inner">
-    <div class="center-block" align ="center">
-        <img src="@Url.Content(imagePath)" alt="" height='270' />
-        <h3>@Html.DisplayFor(model => model.Name)</h3>
-        <h3>$ @Html.DisplayFor(model => model.Price)</h3>
-        <h4 style="color: #25a2c3">
-        <a href="#" onclick="$('#purchase').submit()">Buy |</a>
-        @*@Html.ActionLink("Buy", "AddToCart", "Orders", new { id = Model.Id }, null) |*@
-        @Html.ActionLink("Back to Products", "Index")
-        </h4>
+<section class="wrapper">
+    <div class="inner">
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-4" align="center">
+                <h2>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                </h2>
+            </div>
+        }
+        <div class="center-block" align="center">
+            <img src="@Url.Content(Model.GetImagePath())" alt="" height='270' />
+            <h3>@Html.DisplayFor(model => model.Name)</h3>
+            <h3>$ @Html.DisplayFor(model => model.Price)</h3>
+            <h4 >
+                @if (Request.IsAuthenticated)
+                {
+                    <a href="#" onclick="$('#purchase').submit()">Buy |</a>
+                }
+                @Html.ActionLink("Back to Products", "Index")
+            </h4>
+        </div>
     </div>
-    
-</div>
+</section>
+
 <form id="purchase" style="display: none" action="@Url.Action("AddToCart", "Orders", new { id = Model.Id })" method="post"></form>
 

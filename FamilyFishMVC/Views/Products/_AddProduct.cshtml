@@ -1,0 +1,12 @@
+﻿@model FamilyFishMVC.Models.Product
+@using Microsoft.AspNet.Identity
+
+@if (User.IsInRole("Admin"))
+{
+    <div>
+        @Html.ActionLink("Create New", "Create", "Products") |
+    </div>
+}
+
+
+
