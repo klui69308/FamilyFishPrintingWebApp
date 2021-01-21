@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using FamilyFishMVC.Models;
 using Microsoft.AspNet.Identity;
 
@@ -66,8 +67,12 @@ namespace FamilyFishMVC.Controllers
                 }
                 db.Customers.Add(customer);
                 db.SaveChanges();
+
                 var subject = "Welcome to Family Fish Printing";
-                var body = "Empty at this time";
+                var body = $@"Hi, {customer.Fname}!
+                           Thank you for registering. You can now buy the best custom printed T-Shirt.
+                           Feel free to contact us at familyfishprint@gmail.com for any questions.
+                           Enjoy your stay and have fun.";
 
                 MessageSender.SendEmail(customer.Email, subject, body);
                 return RedirectToAction("Index", "Home");
@@ -131,9 +136,16 @@ namespace FamilyFishMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
-            db.SaveChanges();
+            try
+            {
+                Customer customer = db.Customers.Find(id);
+                db.Customers.Remove(customer);
+                db.SaveChanges();
+            }
+            catch
+            {
+                string alertMessage = "There is an active cart for this customer";
+            }
             return RedirectToAction("Index");
         }
 

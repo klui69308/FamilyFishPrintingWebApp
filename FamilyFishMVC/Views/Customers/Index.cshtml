@@ -17,6 +17,7 @@
                     <th>City</th>
                     <th>State</th>
                     <th>Zip</th>
+                    <th>Admin Action</th>
                 </tr>
                 @foreach (var customer in Model)
                 {
@@ -30,6 +31,10 @@
                         <td>@customer.City</td>
                         <td>@customer.State</td>
                         <td>@customer.Zip</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = customer.Id })
+                        </td>
                     </tr>
                 }
             </table>

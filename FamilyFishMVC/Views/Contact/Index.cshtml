@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="wrapper">
+    <div class="inner">
+        <div>
+            If you would like to have the shirt made custome, please come visit us at 6121 N Hanley Rd, Berkeley, MO 63134
+        </div>
+        <div>
+            <iframe width="700"
+                    height="350"
+                    frameborder="0" style="border:0"
+                    src=@ViewBag.mapSrc
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <h2>Contact Us</h2>
+        @using (Html.BeginForm("CreateMessage", "Contact", new { name = "#name", email = "#email", message = "#message" }, FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    <input type="text" name="name" id="name" value="" placeholder="Name" />
+                </div>
+                <div class="6u$ 12u$(xsmall)">
+                    <input type="email" name="email" id="email" value="" placeholder="Email" />
+                </div>
+                <div class="12u$">
+                    <textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+                </div>
+                <div class="12u$">
+                    <ul class="actions">
+                        <li><input type="submit" value="Send Message" /></li>
+                        <li><input type="reset" value="Reset" class="alt" /></li>
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+

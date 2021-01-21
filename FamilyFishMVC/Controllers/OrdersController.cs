@@ -80,28 +80,7 @@ namespace FamilyFishMVC.Controllers
             {
                 orderLineItem = new List<OrderLineItem>();
             }
-            //if(orderLineItem != null)
-            //{
-            //    foreach (var item in orderLineItem)
-            //    {
-            //        CartItems cartItem = new CartItems();
-            //        cartItem.OrderID = item.Oid;
-            //        string imagePath = "~/ProductImages/" + "stockPhoto" + item.Id + ".png";
-            //        try
-            //        {
-            //            cartItem.ProductImage = imagePath;
-            //        }
-            //        catch
-            //        {
-            //            cartItem.ProductImage = "~/ProductImages/yourPhotoHere.jpg";
-            //        }
-            //        cartItem.Price = item.Price;
-            //        cartItem.Quantity = item.Quantity;
-            //        cart.Add(cartItem);
-            //    };
-            //}
-           
-            //return View(orders.ToList());
+            
             return View(orderLineItem.ToList());
         }
 
