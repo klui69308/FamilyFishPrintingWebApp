@@ -3142,6 +3142,20 @@
 .login-item{
 	width: fit-content;
 }
+
+/* New changes */
+.contactElement {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.element-item {
+	margin: :20px;
+	margin: 20px;
+	min-width: fit-content;
+}
+
 /* Footer */
 
 	#footer {

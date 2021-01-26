@@ -12,7 +12,7 @@
             {
                 <div class="col-md-4">
                     <h2>
-                        @Html.ActionLink("Create New", "Create", "Products")
+                        @Html.ActionLink("Create New", "Create", "Products") 
                     </h2>
                 </div>
             }
@@ -21,10 +21,10 @@
         <div class="row">
             @foreach (var item in Model)
             {
-                <div class="col-md-4">
-                    <a href="@Url.Action("Details", new { id = item.Id })" style = "text-decoration:none">
+                <div class="col-md-4" style="width: 300px">
+                    <a href="@Url.Action("Details", new { id = item.Id })" style = "text-decoration:none; text-align:center">
                         <div>
-                            <img src="@Url.Content(item.GetImagePath())" alt="" height='270' />
+                            <img src="@Url.Content(item.GetImagePath(new HttpContextWrapper(HttpContext.Current)))" alt="" height='270' />
                         </div>
                         <div class="content">
                             <h3>

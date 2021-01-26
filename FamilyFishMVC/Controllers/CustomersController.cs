@@ -136,15 +136,17 @@ namespace FamilyFishMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            Customer customer = db.Customers.Find(id);
             try
             {
-                Customer customer = db.Customers.Find(id);
                 db.Customers.Remove(customer);
                 db.SaveChanges();
             }
             catch
             {
                 string alertMessage = "There is an active cart for this customer";
+                ModelState.AddModelError("", alertMessage);
+                return View(customer);
             }
             return RedirectToAction("Index");
         }

@@ -33,7 +33,7 @@
                         @item.Oid
                     </td>
                     <td>
-                        <img src="@Url.Content(item.Product.GetImagePath())" alt="" height='50' />
+                        <img src="@Url.Content(item.Product.GetImagePath(new HttpContextWrapper(HttpContext.Current)))" alt="" height='50' />
                     </td>
                     <td>
                         @item.Price

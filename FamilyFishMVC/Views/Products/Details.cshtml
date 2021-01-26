@@ -15,9 +15,35 @@
             </div>
         }
         <div class="center-block" align="center">
-            <img src="@Url.Content(Model.GetImagePath())" alt="" height='270' />
-            <h3>@Html.DisplayFor(model => model.Name)</h3>
-            <h3>$ @Html.DisplayFor(model => model.Price)</h3>
+            <table class="alt" style="text-align: center">
+                <tr>
+                    <td colspan="2">
+                        <img src="@Url.Content(Model.GetImagePath(new HttpContextWrapper(HttpContext.Current)))" alt="" height='270' />
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>Name: </h3></td>
+                    <td>
+                        <h3>@Html.DisplayFor(model => model.Name)</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>Product Type: </h3></td>
+                    <td>
+                        <h3>
+                            @foreach (var item in Model.Categories)
+                            {
+                                @: @item.Name
+                            }
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>Price: </h3></td>
+                    <td><h3>$ @Html.DisplayFor(model => model.Price)</h3></td>
+                </tr>
+            </table>
+            
             <h4 >
                 @if (Request.IsAuthenticated)
                 {

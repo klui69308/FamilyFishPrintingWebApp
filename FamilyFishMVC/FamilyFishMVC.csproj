@@ -229,6 +229,7 @@
       <DependentUpon>FamilyFishDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImages.cs" />
+    <Compile Include="Models\ProducViewModels.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\_Customer.cs" />
     <Compile Include="Models\_Product.cs" />
@@ -338,7 +339,7 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\LoginPartial.cshtml" />
     <Content Include="Views\Home\ReadyToBuy.cshtml" />
     <Content Include="Views\Home\ReadyToPrint.cshtml" />
     <Content Include="Views\Home\BringYourOwn.cshtml" />

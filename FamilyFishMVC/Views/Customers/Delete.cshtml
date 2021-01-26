@@ -113,7 +113,6 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
                 <div class="form-actions no-color">
                     <input type="submit" value="Delete" class="btn btn-default" /> |
                     @Html.ActionLink("Back to List", "Index")
@@ -122,3 +121,16 @@
         </div>
     </div>
 </section>
+<div class="inCartError" style="display: none">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+</div>
+@section scripts 
+{
+    <script>
+        if ($('.inCartError').text().trim())
+        {
+            alert($('.inCartError').text())
+            window.location.href = "@Url.Action("Index")"
+        }
+    </script>
+}

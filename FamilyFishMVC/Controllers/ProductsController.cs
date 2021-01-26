@@ -17,26 +17,7 @@ namespace FamilyFishMVC.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            //var productImages = new List<ProductImages>();
-            //foreach(var product in db.Products)
-            //{
-            //    ProductImages productImage = new ProductImages();
-            //    productImage.ImageId = product.Id;
-            //    productImage.Name = product.Name;
-            //    string imagePath = "~/ProductImages/" + "stockPhoto" + product.Id + ".png";
-            //    try
-            //    {
-            //        productImage.Image = imagePath;
-            //    }
-            //    catch
-            //    {
-            //        productImage.Image = "~/ProductImages/yourPhotoHere.jpg";
-            //    }
-            //    productImages.Add(productImage);
-            //}
-
             return View(db.Products.ToList());
-            //return View(productImages);
         }
 
         // GET: Products/Details/5
@@ -75,6 +56,7 @@ namespace FamilyFishMVC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            ViewBag.allCategories = new MultiSelectList(db.Categories.ToList(), "Id", "Name");
             return View();
         }
 
@@ -83,16 +65,40 @@ namespace FamilyFishMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Detail,InventoryCount,ReservedCount,Price")] Product product)
+        public ActionResult Create(ProducViewModels productViewModels, HttpPostedFileBase uploadFile)
         {
-            if (ModelState.IsValid)
+            var isValid = ModelState.IsValid;
+            if (isValid && uploadFile != null && uploadFile.ContentLength > 0 && !uploadFile.FileName.EndsWith(".png"))
             {
+                ModelState.AddModelError("", "File must be a png tpye!");
+                isValid = false;
+            }
+            if (isValid)
+            {
+                var product = new Product
+                {
+                    Detail = productViewModels.Detail,
+                    Name = productViewModels.Name,
+                    InventoryCount = productViewModels.InventoryCount,
+                    ReservedCount = productViewModels.ReservedCount,
+                    Price = productViewModels.Price
+                };
+                foreach (var item in productViewModels.CategoryIds)
+                {
+                    var category = db.Categories.Find(item);
+                    product.Categories.Add(category);
+                }
                 db.Products.Add(product);
                 db.SaveChanges();
+                if(uploadFile!= null && uploadFile.ContentLength > 0)
+                {
+                    var filePath = Server.MapPath(product.GetImagePath(HttpContext, false));
+                    uploadFile.SaveAs(filePath);
+                }
                 return RedirectToAction("Index");
             }
-
-            return View(product);
+            ViewBag.allCategories = new MultiSelectList(db.Categories.ToList(), "Id", "Name");
+            return View(productViewModels);
         }
 
         // GET: Products/Edit/5
@@ -149,6 +155,8 @@ namespace FamilyFishMVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
+            product.Categories.Clear();
+            db.SaveChanges();
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");

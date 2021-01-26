@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FamilyFishMVC.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,29 +10,33 @@ namespace FamilyFishMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private FamilyFishDBEntities db = new FamilyFishDBEntities();
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult ReadyToBuy()
+        [ChildActionOnly]
+        public ActionResult LoginPartial()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            var userId = User.Identity.GetUserId();
+            var customer = db.Customers.Find(userId);
+            if(customer != null)
+            {
+                ViewBag.customer = customer.Fname;
+            }
+            else
+            {
+                ViewBag.customer = "Admin";
+            }
+            return PartialView();
         }
-
-        public ActionResult ReadyToPrint()
+        protected override void Dispose(bool disposing)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        public ActionResult BringYourOwn()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
