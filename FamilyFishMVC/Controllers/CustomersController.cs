@@ -69,10 +69,10 @@ namespace FamilyFishMVC.Controllers
                 db.SaveChanges();
 
                 var subject = "Welcome to Family Fish Printing";
-                var body = $@"Hi, {customer.Fname}!
-                           Thank you for registering. You can now buy the best custom printed T-Shirt.
-                           Feel free to contact us at familyfishprint@gmail.com for any questions.
-                           Enjoy your stay and have fun.";
+                var body = "Hi, " + customer.Fname +"!" + Environment.NewLine +
+                           "Thank you for registering. You can now buy the best custom printed T-Shirt." + Environment.NewLine +
+                           "Feel free to contact us at familyfishprint@gmail.com for any questions." + Environment.NewLine +
+                           "Enjoy your stay and have fun.";
 
                 MessageSender.SendEmail(customer.Email, subject, body);
                 return RedirectToAction("Index", "Home");

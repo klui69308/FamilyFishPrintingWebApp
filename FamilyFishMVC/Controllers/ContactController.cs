@@ -24,7 +24,7 @@ namespace FamilyFishMVC.Controllers
         public ActionResult CreateMessage(string name, string email, string message)
         {
             var subject = $@"Customer '{name}' sent us an inqury";
-            var body = "Email: " + email+ "." + Environment.NewLine + message; 
+            var body = "Email: " + email + "." + Environment.NewLine + message; 
 
             MessageSender.SendEmail("familyfishprinting@gmail.com", subject, body);
             return RedirectToAction("Index");
